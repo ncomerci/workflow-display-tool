@@ -1,5 +1,5 @@
 {
-  "name": "mimic-worktest",
+  "name": "workflow-display-tool",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,10 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "apollo-client": "^2.6.10",
+    "@apollo/client": "^3.10.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-flow": "^1.0.3"
+    "react-flow-renderer": "^10.3.17"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
