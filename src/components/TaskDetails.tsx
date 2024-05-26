@@ -8,8 +8,8 @@ function TaskDetails({ task: { name, taskConfig } }: Props) {
   return (
     <div>
       <h3>{name}</h3>
-      <p>Next Balance Connector: {taskConfig.nextBalanceConnector}</p>
       <p>Previous Balance Connector: {taskConfig.previousBalanceConnector}</p>
+      <p>Next Balance Connector: {taskConfig.nextBalanceConnector}</p>
     </div>
   );
 }

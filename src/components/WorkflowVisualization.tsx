@@ -1,8 +1,8 @@
-import ReactFlow, { MiniMap, Controls, Background } from 'react-flow-renderer';
+import ReactFlow, { MiniMap, Controls, Background, Node, Edge } from 'react-flow-renderer';
 import { Task } from '../types/Workflow';
 
 import 'react-flow-renderer/dist/style.css';
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import TaskDetails from './TaskDetails';
 import Workflow from '../entities/Workflow';
 
@@ -11,6 +11,8 @@ interface Props {
 }
 
 const NULL_ADDRESS = '0x0000000000000000000000000000000000000000000000000000000000000000'
+
+type WorkflowNode = Node<{ label: string } & Task>
 
 function getWorkflow(firstTask: Task, tasks: Task[]): Workflow {
   const head = new Workflow(firstTask);
@@ -46,41 +48,57 @@ function getDividedWorkflows(tasks: Task[]): Workflow[] {
   return firstTasks.map(t => getWorkflow(t, [...tasks]));
 }
 
-function WorkflowVisualization({ tasks }: Props) {
-  const [selectedTask, setSelectedTask] = useState<string | null>(null);
-  useEffect(() => {
-    const result = getDividedWorkflows(tasks)
-    console.log(result);
-  }, [tasks])
-  
-  // console.log(getDividedTasks(tasks));
-  const nodes = tasks.map((task, index) => ({
-    id: `${index}`,
-    type: 'default',
-    data: { label: task.name },
-    position: { x: 0, y: index * 100},
-  }));
+function generateNodesAndEdges(workflow: Workflow): { nodes: WorkflowNode[], edges: Edge[] } {
+  const nodes: WorkflowNode[] = [];
+  const edges: Edge[] = [];
+  const visited = new Set<string>();
+  const positionMap = new Map<string, { x: number; y: number }>();
 
-  const edges = tasks.map(({ taskConfig: { previousBalanceConnector, nextBalanceConnector } }, index) => {
-    const sourceIndex = tasks.findIndex(t => t.taskConfig.nextBalanceConnector === previousBalanceConnector);
-    const targetIndex = tasks.findIndex(t => t.taskConfig.previousBalanceConnector === nextBalanceConnector);
-    return {
-      id: `edge-${index}`,
-      // source: '',
-      target: '',
-      source: previousBalanceConnector === NULL_ADDRESS ? '' : `${sourceIndex}`,
-      // target: nextBalanceConnector === NULL_ADDRESS ? '' : `${targetIndex}`,
-      type: 'default',
-    };
-  });
+  function traverse(workflow: Workflow, xPosition: number, yPosition: number, parentId?: string) {
+    const head = workflow.getHead();
+    const nodeId = head.name;
+    if (!visited.has(nodeId)) {
+      visited.add(nodeId);
+      const position = { x: xPosition, y: yPosition };
+      positionMap.set(nodeId, position);
+      nodes.push({
+        id: nodeId,
+        type: 'default',
+        data: { label: nodeId, ...head },
+        position
+      });
+
+      if (parentId) {
+        edges.push({
+          id: `${parentId}-${nodeId}`,
+          source: parentId,
+          target: nodeId,
+          type: 'default'
+        });
+      }
+
+      workflow.getChildren().forEach((child, index) => traverse(child, xPosition + index * 200, yPosition + 100, nodeId));
+    }
+  }
+
+  traverse(workflow, 0, 0);
+  return { nodes, edges };
+}
+
+function WorkflowVisualization({ tasks }: Props) {
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const workflows = useMemo(() => getDividedWorkflows(tasks), [tasks]);
+  const selectedWorkflow = workflows[2];
+  
+  const { nodes, edges } = useMemo(() => generateNodesAndEdges(selectedWorkflow), [selectedWorkflow]);
 
   return (
-    <ReactFlow nodes={nodes} edges={edges} onNodeClick={(_, node) => setSelectedTask(node.id)}>
+    <ReactFlow nodes={nodes} edges={edges} onNodeClick={(_, node) => setSelectedTask(node.data)}>
       <MiniMap />
       <Controls />
       <Background />
       <div style={{ width: '300px', padding: '10px', borderLeft: '1px solid #ccc' }}>
-        {selectedTask && <TaskDetails task={tasks[Number(selectedTask)]} />}
+        {selectedTask && <TaskDetails task={selectedTask} />}
       </div>
     </ReactFlow>
   );
