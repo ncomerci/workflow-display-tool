@@ -2,9 +2,9 @@ import TaskNode from './TaskNode';
 import { Task } from '../types/Workflow';
 import type { Node, Edge } from 'react-flow-renderer';
 
-type WorkflowNode = Node<{ label: string } & Task>
+type WorkflowNode = Node<{ label: string } & Task>;
 
-const NULL_ADDRESS = '0x0000000000000000000000000000000000000000000000000000000000000000'
+const NULL_ADDRESS = '0x0000000000000000000000000000000000000000000000000000000000000000';
 
 export default class Workflows {
 
@@ -72,6 +72,7 @@ export default class Workflows {
     if(treeIdx < 0 || treeIdx >= this.size()) {
       throw new Error(`Invalid tree index: ${treeIdx}`);
     }
+    const selectedTree = this.taskTrees[treeIdx];
     const nodes: WorkflowNode[] = [];
     const edges: Edge[] = [];
     const visited = new Set<string>();
@@ -80,14 +81,14 @@ export default class Workflows {
     const traverse = (
       taskTree: TaskNode,
       xPosition: number,
-      yPosition: number,
+      depth: number,
       parentId?: string
     ) => {
       const head = taskTree.getHead();
       const nodeId = head.name;
       if (!visited.has(nodeId)) {
         visited.add(nodeId);
-        const position = { x: xPosition, y: yPosition };
+        const position = { x: xPosition, y: depth * 100 };
         positionMap.set(nodeId, position);
         nodes.push({
           id: nodeId,
@@ -108,13 +109,37 @@ export default class Workflows {
         taskTree
           .getChildren()
           .forEach((child, index) =>
-            traverse(child, xPosition + index * 200, yPosition + 100, nodeId)
+            traverse(child, xPosition + index * 200, depth + 1, nodeId)
           );
+
+        if (head.taskConfig.nextBalanceConnector !== NULL_ADDRESS && taskTree.getChildren().length === 0) {
+          const targetTask = findTaskInTree(selectedTree, head.taskConfig.nextBalanceConnector);
+          if (targetTask) {
+            edges.push({
+              id: `${nodeId}-${targetTask.getHead().name}`,
+              source: nodeId,
+              target: targetTask.getHead().name,
+              type: 'default',
+            });
+          }
+        }
       }
     }
+
+    const findTaskInTree = (tree: TaskNode, connector: string): TaskNode | null => {
+      if (tree.getHead().taskConfig.previousBalanceConnector === connector) {
+        return tree;
+      }
+      for (const child of tree.getChildren()) {
+        const result = findTaskInTree(child, connector);
+        if (result) {
+          return result;
+        }
+      }
+      return null;
+    }
   
-    traverse(this.taskTrees[treeIdx], 0, 0);
+    traverse(selectedTree, 0, 0);
     return { nodes, edges };
   }
-  
 }
