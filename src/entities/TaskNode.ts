@@ -1,8 +1,8 @@
 import { Task } from "../types/Workflow";
 
-export default class Workflow {
+export default class TaskNode {
   private head: Task;
-  private children: Workflow[];
+  private children: TaskNode[];
 
   constructor(head: Task) {
     this.head = head;
@@ -13,14 +13,14 @@ export default class Workflow {
     return this.head;
   }
 
-  public getChildren(): Workflow[] {
+  public getChildren(): TaskNode[] {
     return this.children;
   }
 
-  public addChild(child: Task): Workflow {
-    const workflow = new Workflow(child);
-    this.children.push(workflow);
-    return workflow;
+  public addChild(child: Task): TaskNode {
+    const taskNode = new TaskNode(child);
+    this.children.push(taskNode);
+    return taskNode;
   }
 
   public getNodes(): Task[] {

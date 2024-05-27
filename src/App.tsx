@@ -1,5 +1,5 @@
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import Workflow from './components/Workflow';
+import View from "./components/View";
 
 const client = new ApolloClient({
   uri: 'https://api.thegraph.com/subgraphs/name/mimic-fi/v3-mainnet',
@@ -8,7 +8,7 @@ const client = new ApolloClient({
 
 const App = () => (
   <ApolloProvider client={client}>
-    <Workflow />
+    <View />
   </ApolloProvider>
 );
 
