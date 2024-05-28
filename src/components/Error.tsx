@@ -1,31 +1,24 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import { CloseIcon } from '@chakra-ui/icons'
 
+import styles from '../styles/Error.module.css'
+
 interface Props {
   message: string
 }
 
 export default function Error({ message }: Props) {
   return (
-    <Box textAlign="center" py={10} px={6}>
-      <Box display="inline-block">
-        <Flex
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-          bg={'red.500'}
-          rounded={'50px'}
-          w={'55px'}
-          h={'55px'}
-          textAlign="center"
-        >
-          <CloseIcon boxSize={'20px'} color={'white'} />
+    <Box className={styles.box}>
+      <Box className={styles.inlineBlock}>
+        <Flex className={styles.flexContainer} bg="red.500">
+          <CloseIcon className={styles.icon} />
         </Flex>
       </Box>
-      <Heading as="h2" size="xl" mt={6} mb={2}>
+      <Heading as="h2" size="xl" className={styles.heading}>
         Something went wrong
       </Heading>
-      <Text color={'gray.500'}>{message}</Text>
+      <Text color="gray.500">{message}</Text>
     </Box>
   )
 }

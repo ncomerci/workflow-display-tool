@@ -1,15 +1,14 @@
-import { useMemo, useCallback, useState, useEffect } from 'react'
-import ReactFlow, { Background, Controls, MiniMap, Node, Edge } from 'react-flow-renderer'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import ReactFlow, { Background, Controls, Edge, MiniMap, Node } from 'react-flow-renderer'
 import 'react-flow-renderer/dist/style.css'
 
 import { useToast } from '@chakra-ui/react'
 
 import Workflows from '../entities/Workflows'
+import styles from '../styles/WorkflowVisualization.module.css'
 import { Task } from '../types/Tasks'
 
 import TaskDetails from './TaskDetails'
-
-import style from '../styles/WorkflowVisualization.module.css'
 
 interface Props {
   workflows: Workflows
@@ -75,11 +74,11 @@ function WorkflowVisualization({ workflows, workflowIdx }: Props) {
   )
 
   const getNodeClassName = (node: Node) => {
-    return highlightedElements.nodes.has(node.id) ? style['node-highlight'] : ''
+    return highlightedElements.nodes.has(node.id) ? styles['node-highlight'] : ''
   }
 
   const getEdgeClassName = (edge: Edge) => {
-    return highlightedElements.edges.has(edge.id) ? style['edge-highlight'] : ''
+    return highlightedElements.edges.has(edge.id) ? styles['edge-highlight'] : ''
   }
 
   return (
@@ -87,7 +86,6 @@ function WorkflowVisualization({ workflows, workflowIdx }: Props) {
       nodes={nodes.map((node) => ({ ...node, className: getNodeClassName(node) }))}
       edges={edges.map((edge) => ({ ...edge, className: getEdgeClassName(edge) }))}
       onNodeClick={(_, node) => handleNodeClick(node)}
-      style={{ width: '100%', height: '100%' }}
     >
       <MiniMap />
       <Controls />

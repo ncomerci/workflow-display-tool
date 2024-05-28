@@ -3,6 +3,8 @@ import { Box, Link, Popover, PopoverContent, PopoverTrigger, Stack, useColorMode
 import DesktopSubNav from './DesktopSubNav'
 import { NavItem } from './Navbar'
 
+import styles from '../../styles/DesktopNav.module.css'
+
 interface Props {
   items: NavItem[]
 }
@@ -13,19 +15,17 @@ function DesktopNav({ items }: Props) {
   const popoverContentBgColor = useColorModeValue('white', 'gray.800')
 
   return (
-    <Stack direction={'row'} spacing={4}>
+    <Stack direction="row" spacing={4}>
       {items.map((navItem) => (
         <Box key={navItem.label}>
-          <Popover trigger={'hover'} placement={'bottom-start'}>
+          <Popover trigger="hover" placement="bottom-start">
             <PopoverTrigger>
               <Link
-                p={2}
+                className={styles.link}
+                fontSize="sm"
                 onClick={navItem.onClick}
-                fontSize={'sm'}
-                fontWeight={500}
                 color={linkColor}
                 _hover={{
-                  textDecoration: 'none',
                   color: linkHoverColor,
                 }}
               >
@@ -34,7 +34,7 @@ function DesktopNav({ items }: Props) {
             </PopoverTrigger>
 
             {navItem.children && (
-              <PopoverContent border={0} boxShadow={'xl'} bg={popoverContentBgColor} p={4} rounded={'xl'} minW={'sm'}>
+              <PopoverContent border={0} p={4} bg={popoverContentBgColor} boxShadow="xl" rounded="xl" minW="sm">
                 <Stack>
                   {navItem.children.map((child) => (
                     <DesktopSubNav key={child.label} {...child} />

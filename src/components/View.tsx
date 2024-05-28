@@ -4,13 +4,13 @@ import { gql, useQuery } from '@apollo/client'
 import { Spinner } from '@chakra-ui/react'
 
 import Workflows from '../entities/Workflows'
-import style from '../styles/View.module.css'
+import styles from '../styles/View.module.css'
 import { EnvironmentQueryResult } from '../types/Tasks'
 
 import Navbar from './Navbar/Navbar'
 
-import WorkflowVisualization from './WorkflowVisualization'
 import Error from './Error'
+import WorkflowVisualization from './WorkflowVisualization'
 
 const GET_WORKFLOWS = gql`
   {
@@ -41,7 +41,7 @@ function View() {
           onClick: () => setWorkflowIdx(idx),
         }))}
       />
-      <div className={style.container}>
+      <div className={styles.container}>
         {loading && <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="gray.600" size="xl" />}
         {error && <Error message={error.message} />}
         {workflows && <WorkflowVisualization workflows={workflows} workflowIdx={workflowIdx} />}

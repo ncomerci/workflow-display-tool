@@ -1,5 +1,5 @@
 import { NULL_ADDRESS } from '../entities/Workflows'
-import style from '../styles/TaskDetails.module.css'
+import styles from '../styles/TaskDetails.module.css'
 import { Task } from '../types/Tasks'
 
 interface Props {
@@ -16,14 +16,14 @@ function TaskDetails({ task: { taskConfig } }: Props) {
       {hasPrevConnector && (
         <>
           <div>Previous Connector:</div>
-          <div className={style.connector}>{prevConnector}</div>
+          <div className={styles.connector}>{prevConnector}</div>
         </>
       )}
       {hasPrevConnector && hasNextConnector && <br />}
       {hasNextConnector && (
         <>
           <div>Next Connector:</div>
-          <div className={style.connector}>{nextConnector}</div>
+          <div className={styles.connector}>{nextConnector}</div>
         </>
       )}
     </div>

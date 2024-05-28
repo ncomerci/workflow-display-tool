@@ -1,0 +1,30 @@
+.box {
+  text-align: center;
+  padding: 10px 6px;
+}
+
+.inlineBlock {
+  display: inline-block;
+}
+
+.flexContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  width: 55px;
+  height: 55px;
+  text-align: center;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  color: white;
+}
+
+.heading {
+  margin-top: 6px;
+  margin-bottom: 2px;
+}
