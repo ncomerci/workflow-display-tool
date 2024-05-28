@@ -1,9 +1,10 @@
-import { Flex, Link, Stack, useDisclosure, Text, useColorModeValue, Icon, Collapse } from '@chakra-ui/react';
+import { ChevronDownIcon } from '@chakra-ui/icons'
+import { Collapse, Flex, Icon, Link, Stack, Text, useColorModeValue, useDisclosure } from '@chakra-ui/react'
+
 import { NavItem } from './Navbar'
-import { ChevronDownIcon } from '@chakra-ui/icons';
 
 function MobileNavItem({ label, children }: NavItem) {
-  const { isOpen, onToggle } = useDisclosure();
+  const { isOpen, onToggle } = useDisclosure()
 
   return (
     <Stack spacing={4} onClick={children && onToggle}>
@@ -14,10 +15,9 @@ function MobileNavItem({ label, children }: NavItem) {
         align={'center'}
         _hover={{
           textDecoration: 'none',
-        }}>
-        <Text
-          fontWeight={600}
-          color={useColorModeValue('gray.600', 'gray.200')}>
+        }}
+      >
+        <Text fontWeight={600} color={useColorModeValue('gray.600', 'gray.200')}>
           {label}
         </Text>
         {children && (
@@ -38,7 +38,8 @@ function MobileNavItem({ label, children }: NavItem) {
           borderLeft={1}
           borderStyle={'solid'}
           borderColor={useColorModeValue('gray.200', 'gray.700')}
-          align={'start'}>
+          align={'start'}
+        >
           {children &&
             children.map((child) => (
               <Link key={child.label} py={2} onClick={child.onClick}>
@@ -48,7 +49,7 @@ function MobileNavItem({ label, children }: NavItem) {
         </Stack>
       </Collapse>
     </Stack>
-  );
+  )
 }
 
 export default MobileNavItem

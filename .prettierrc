@@ -6,6 +6,7 @@
   "tabWidth": 2,
   "trailingComma": "es5",
   "useTabs": false,
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
   "importOrder": ["^react", "^@?\\w", "^\\.\\.(?!/?$)", "^\\.\\./?$", "^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true

@@ -1,3 +1,3 @@
 export type QueryResult<T, K extends keyof never> = {
-  [P in K]: T;
-};
+  [P in K]: T
+}
