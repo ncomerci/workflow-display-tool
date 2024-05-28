@@ -1,4 +1,5 @@
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { ChakraProvider } from '@chakra-ui/react'
 import View from "./components/View";
 
 const client = new ApolloClient({
@@ -8,7 +9,9 @@ const client = new ApolloClient({
 
 const App = () => (
   <ApolloProvider client={client}>
-    <View />
+    <ChakraProvider>
+      <View />
+    </ChakraProvider>
   </ApolloProvider>
 );
 

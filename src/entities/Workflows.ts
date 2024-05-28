@@ -4,7 +4,7 @@ import type { Node, Edge } from 'react-flow-renderer';
 
 type WorkflowNode = Node<{ label: string } & Task>;
 
-const NULL_ADDRESS = '0x0000000000000000000000000000000000000000000000000000000000000000';
+export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000000000000000000000000000';
 
 export default class Workflows {
 
@@ -141,5 +141,9 @@ export default class Workflows {
   
     traverse(selectedTree, 0, 0);
     return { nodes, edges };
+  }
+
+  public getStartTasks(): Task[] {
+    return this.taskTrees.map((t) => t.getHead());
   }
 }

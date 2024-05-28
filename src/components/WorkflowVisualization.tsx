@@ -2,28 +2,36 @@ import ReactFlow, { MiniMap, Controls, Background } from 'react-flow-renderer';
 import { Task } from '../types/Workflow';
 
 import 'react-flow-renderer/dist/style.css';
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import TaskDetails from './TaskDetails';
 import Workflows from '../entities/Workflows';
+import { useToast } from '@chakra-ui/react';
 
 interface Props {
-  tasks: Task[];
+  workflows: Workflows;
+  workflowIdx: number;
 }
 
-function WorkflowVisualization({ tasks }: Props) {
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
-  const workflows = useMemo(() => new Workflows(tasks), [tasks]);
-  
-  const { nodes, edges } = useMemo(() => workflows.get(0), [workflows]);
+function WorkflowVisualization({ workflows, workflowIdx }: Props) {
+  const { nodes, edges } = useMemo(() => workflows.get(workflowIdx), [workflows, workflowIdx]);
+  const toast = useToast();
+
+  const handleNodeClick = (task: Task) => {
+    toast.closeAll();
+    toast({
+      title: `${task.name}`,
+      description: <TaskDetails task={task} />,
+      status: 'info',
+      duration: null,
+      isClosable: true,
+    });
+  }
 
   return (
-    <ReactFlow nodes={nodes} edges={edges} onNodeClick={(_, node) => setSelectedTask(node.data)}>
+    <ReactFlow nodes={nodes} edges={edges} onNodeClick={(_, node) => handleNodeClick(node.data)}>
       <MiniMap />
       <Controls />
       <Background />
-      <div style={{ width: '300px', padding: '10px', borderLeft: '1px solid #ccc' }}>
-        {selectedTask && <TaskDetails task={selectedTask} />}
-      </div>
     </ReactFlow>
   );
 }

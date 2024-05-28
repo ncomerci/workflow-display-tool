@@ -2,7 +2,10 @@ import { useQuery, gql } from '@apollo/client';
 import { EnvironmentQueryResult } from '../types/Workflow';
 import WorkflowVisualization from './WorkflowVisualization';
 
-import style from './View.module.css';
+import style from "../styles/View.module.css";
+import Navbar from "./Navbar/Navbar";
+import { useMemo, useState } from "react";
+import Workflows from "../entities/Workflows";
 
 const GET_WORKFLOWS = gql`
   {
@@ -21,14 +24,37 @@ const GET_WORKFLOWS = gql`
 function View() {
   const { loading, error, data } =
     useQuery<EnvironmentQueryResult>(GET_WORKFLOWS);
+  const tasks = data?.environment.tasks;
+  const workflows = useMemo(
+    () => (tasks ? new Workflows(tasks) : undefined),
+    [tasks]
+  );
+  const startTasks = useMemo(
+    () => workflows?.getStartTasks() || [],
+    [workflows]
+  );
+  const [workflowIdx, setWorkflowIdx] = useState<number>(0);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <div className={style.container}>
-      {data && <WorkflowVisualization tasks={data.environment.tasks} />}
-    </div>
+    <>
+      <Navbar
+        workflowItems={startTasks.map((task, idx) => ({
+          label: task.name,
+          onClick: () => setWorkflowIdx(idx),
+        }))}
+      />
+      <div className={style.container}>
+        {workflows && (
+          <WorkflowVisualization
+            workflows={workflows}
+            workflowIdx={workflowIdx}
+          />
+        )}
+      </div>
+    </>
   );
 }
 
