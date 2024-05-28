@@ -1,10 +1,7 @@
-import type { Edge, Node } from 'react-flow-renderer'
-
-import { Task } from '../types/Workflow'
+import { Task } from '../types/Tasks'
+import { WorkflowEdge, WorkflowNode, WorkflowTree } from '../types/Workflows'
 
 import TaskNode from './TaskNode'
-
-type WorkflowNode = Node<{ label: string } & Task>
 
 export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000000000000000000000000000'
 
@@ -60,16 +57,13 @@ export default class Workflows {
     return this.taskTrees.length
   }
 
-  public get(treeIdx: number): {
-    nodes: WorkflowNode[]
-    edges: Edge[]
-  } {
+  public get(treeIdx: number): WorkflowTree {
     if (treeIdx < 0 || treeIdx >= this.size()) {
       throw new Error(`Invalid tree index: ${treeIdx}`)
     }
     const selectedTree = this.taskTrees[treeIdx]
     const nodes: WorkflowNode[] = []
-    const edges: Edge[] = []
+    const edges: WorkflowEdge[] = []
     const visited = new Set<string>()
     const positionMap = new Map<string, { x: number; y: number }>()
 

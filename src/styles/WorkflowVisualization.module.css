@@ -1,0 +1,7 @@
+.node-highlight {
+  border: 2px solid #ff6347;
+}
+
+.edge-highlight path {
+  stroke: #ff6347;
+}

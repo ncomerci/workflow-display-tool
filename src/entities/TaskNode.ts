@@ -1,4 +1,4 @@
-import { Task } from '../types/Workflow'
+import { Task } from '../types/Tasks'
 
 export default class TaskNode {
   private head: Task

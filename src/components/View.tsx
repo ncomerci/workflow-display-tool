@@ -4,7 +4,7 @@ import { gql, useQuery } from '@apollo/client'
 
 import Workflows from '../entities/Workflows'
 import style from '../styles/View.module.css'
-import { EnvironmentQueryResult } from '../types/Workflow'
+import { EnvironmentQueryResult } from '../types/Tasks'
 
 import Navbar from './Navbar/Navbar'
 

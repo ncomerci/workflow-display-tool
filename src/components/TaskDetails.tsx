@@ -1,6 +1,6 @@
 import { NULL_ADDRESS } from '../entities/Workflows'
 import style from '../styles/TaskDetails.module.css'
-import { Task } from '../types/Workflow'
+import { Task } from '../types/Tasks'
 
 interface Props {
   task: Task
