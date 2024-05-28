@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 
 import { gql, useQuery } from '@apollo/client'
+import { Spinner } from '@chakra-ui/react'
 
 import Workflows from '../entities/Workflows'
 import style from '../styles/View.module.css'
@@ -9,6 +10,7 @@ import { EnvironmentQueryResult } from '../types/Tasks'
 import Navbar from './Navbar/Navbar'
 
 import WorkflowVisualization from './WorkflowVisualization'
+import Error from './Error'
 
 const GET_WORKFLOWS = gql`
   {
@@ -31,9 +33,6 @@ function View() {
   const startTasks = useMemo(() => workflows?.getStartTasks() || [], [workflows])
   const [workflowIdx, setWorkflowIdx] = useState<number>(0)
 
-  if (loading) return <p>Loading...</p>
-  if (error) return <p>Error: {error.message}</p>
-
   return (
     <>
       <Navbar
@@ -43,6 +42,8 @@ function View() {
         }))}
       />
       <div className={style.container}>
+        {loading && <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="gray.600" size="xl" />}
+        {error && <Error message={error.message} />}
         {workflows && <WorkflowVisualization workflows={workflows} workflowIdx={workflowIdx} />}
       </div>
     </>
