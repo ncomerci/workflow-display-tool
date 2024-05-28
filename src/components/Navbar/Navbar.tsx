@@ -1,17 +1,11 @@
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
-import {
-  Box,
-  Collapse,
-  Flex,
-  IconButton,
-  Text,
-  useBreakpointValue,
-  useColorModeValue,
-  useDisclosure,
-} from '@chakra-ui/react'
+import { Box, Collapse, Flex, IconButton, useColorModeValue, useDisclosure } from '@chakra-ui/react'
+import Logo from '../../assets/logo.png'
 
 import DesktopNav from './DesktopNav'
 import MobileNav from './MobileNav'
+
+import styles from '../../styles/Navbar.module.css'
 
 export interface NavItem {
   label: string
@@ -55,14 +49,10 @@ export default function Navbar({ workflowItems }: Props) {
             aria-label="Toggle Navigation"
           />
         </Flex>
-        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-          <Text
-            textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-            fontFamily="heading"
-            color={useColorModeValue('gray.800', 'white')}
-          >
-            Logo
-          </Text>
+        <Flex flex={{ base: 1 }} justify={{ base: 'end', md: 'start' }} align="center">
+          <Flex justify={{ base: 'center', md: 'start' }}>
+            <img className={styles.logo} src={Logo} alt="Logo" />
+          </Flex>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav items={NAV_ITEMS} />

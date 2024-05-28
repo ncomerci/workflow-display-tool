@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import ReactFlow, { Background, Controls, Edge, MiniMap, Node } from 'react-flow-renderer'
-import 'react-flow-renderer/dist/style.css'
+import ReactFlow, { Background, Controls, Edge, Node } from 'reactflow'
+import 'reactflow/dist/style.css'
 
 import { useToast } from '@chakra-ui/react'
 
@@ -87,7 +87,6 @@ function WorkflowVisualization({ workflows, workflowIdx }: Props) {
       edges={edges.map((edge) => ({ ...edge, className: getEdgeClassName(edge) }))}
       onNodeClick={(_, node) => handleNodeClick(node)}
     >
-      <MiniMap />
       <Controls />
       <Background />
     </ReactFlow>
