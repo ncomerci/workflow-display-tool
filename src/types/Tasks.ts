@@ -1,5 +1,3 @@
-import { QueryResult } from './QueryResult'
-
 export interface TaskConfig {
   nextBalanceConnector: string
   previousBalanceConnector: string
@@ -18,7 +16,3 @@ export interface Enviroment {
   id: string
   namespace: string
 }
-
-export type WorkflowsQueryResult = QueryResult<WorkflowsEnvironment, 'environment'>
-
-export type EnvironmentsQueryResult = QueryResult<Enviroment[], 'environments'>

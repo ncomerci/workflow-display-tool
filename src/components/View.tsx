@@ -5,7 +5,7 @@ import { Spinner } from '@chakra-ui/react'
 
 import Workflows from '../entities/Workflows'
 import styles from '../styles/View.module.css'
-import { EnvironmentsQueryResult, WorkflowsQueryResult } from '../types/Tasks'
+import { EnvironmentsQueryResult, WorkflowsQueryResult } from '../types/QueryResult'
 
 import Navbar from './Navbar/Navbar'
 
@@ -81,7 +81,7 @@ function View() {
       />
       <div className={styles.container}>
         {isLoading && <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="gray.600" size="xl" />}
-        {isError && <Error message={errorWorkflows?.message || errorEnvironments?.message || ''} />}
+        {isError && <Error message={errorEnvironments?.message || errorWorkflows?.message || ''} />}
         {workflows && <WorkflowVisualization workflows={workflows} workflowIdx={workflowIdx} />}
       </div>
     </>
