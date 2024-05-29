@@ -22,8 +22,4 @@ export default class TaskNode {
     this.children.push(taskNode)
     return taskNode
   }
-
-  public getNodes(): Task[] {
-    return [this.head, ...this.children.flatMap((child) => child.getNodes())]
-  }
 }
