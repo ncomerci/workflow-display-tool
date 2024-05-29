@@ -1,30 +1,35 @@
-# React + TypeScript + Vite
+# Workflow Display Tool
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Workflow Display Tool is a web application for visualizing workflows using React and Vite.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Visualize workflows with interactive nodes and edges
+- Detailed task information display on node click
+- Responsive design for both desktop and mobile views
 
-## Expanding the ESLint configuration
+## Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Docker
 
-- Configure the top-level `parserOptions` property like this:
+## Getting Started
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+Follow these instructions to get a copy of the project up and running on your local machine using Docker.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Build and Run the Docker Container
+
+1. **Build the Docker image**:
+
+   ```bash
+   docker build -t workflow-display-tool .
+   ```
+
+2. **Run the Docker container**:
+
+   ```bash
+   docker run -p 4173:4173 workflow-display-tool
+   ```
+
+3. **Access the application**:
+
+   Open your web browser and navigate to `http://localhost:4173`.
