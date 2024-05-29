@@ -12,11 +12,12 @@ export interface NavItem {
   subLabel?: string
   children?: Array<NavItem>
   onClick?: () => void
+  isSelected?: boolean
 }
 
 interface Props {
-  workflowItems: Pick<NavItem, 'label' | 'onClick'>[]
-  enviromentItems: Pick<NavItem, 'label' | 'onClick'>[]
+  workflowItems: Pick<NavItem, 'label' | 'onClick' | 'isSelected'>[]
+  enviromentItems: Pick<NavItem, 'label' | 'onClick' | 'isSelected'>[]
 }
 
 export default function Navbar({ workflowItems, enviromentItems }: Props) {

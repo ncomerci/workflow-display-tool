@@ -1,3 +1,7 @@
+.node:hover {
+  cursor: pointer;
+}
+
 .node-highlight {
   border: 2px solid #ff6347;
 }

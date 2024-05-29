@@ -1,9 +1,9 @@
 import { Box, Link, Popover, PopoverContent, PopoverTrigger, Stack, useColorModeValue } from '@chakra-ui/react'
 
-import DesktopSubNav from './DesktopSubNav'
-import { NavItem } from './Navbar'
-
 import styles from '../../styles/DesktopNav.module.css'
+
+import { NavItem } from './Navbar'
+import SubNavItem from './SubNavItem'
 
 interface Props {
   items: NavItem[]
@@ -37,7 +37,7 @@ function DesktopNav({ items }: Props) {
               <PopoverContent border={0} p={4} bg={popoverContentBgColor} boxShadow="xl" rounded="xl" minW="sm">
                 <Stack>
                   {navItem.children.map((child) => (
-                    <DesktopSubNav key={child.label} {...child} />
+                    <SubNavItem key={child.label} {...child} />
                   ))}
                 </Stack>
               </PopoverContent>

@@ -71,10 +71,12 @@ function View() {
             setEnvironmentId(env.id)
             setWorkflowIdx(0)
           },
+          isSelected: env.id === environmentId,
         }))}
         workflowItems={startTasks.map((task, idx) => ({
           label: task.name,
           onClick: () => setWorkflowIdx(idx),
+          isSelected: idx === workflowIdx,
         }))}
       />
       <div className={styles.container}>

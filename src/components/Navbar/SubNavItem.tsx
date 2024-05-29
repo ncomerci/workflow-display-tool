@@ -3,7 +3,14 @@ import { Box, Flex, Icon, Link, Stack, Text, useColorModeValue } from '@chakra-u
 
 import { NavItem } from './Navbar'
 
-function DesktopSubNav({ label, onClick, subLabel }: NavItem) {
+interface DesktopSubNavProps extends NavItem {
+  isSelected?: boolean
+}
+
+function SubNavItem({ label, onClick, subLabel, isSelected }: DesktopSubNavProps) {
+  const hoverBg = useColorModeValue('pink.50', 'gray.900')
+  const hoverColor = 'pink.400'
+
   return (
     <Link
       onClick={onClick}
@@ -11,19 +18,26 @@ function DesktopSubNav({ label, onClick, subLabel }: NavItem) {
       display="block"
       p={2}
       rounded="md"
-      _hover={{ bg: useColorModeValue('pink.50', 'gray.900') }}
+      bg={isSelected ? hoverBg : 'transparent'}
+      _hover={{ bg: hoverBg }}
+      w="100%"
     >
       <Stack direction="row" align="center">
         <Box>
-          <Text transition="all .3s ease" _groupHover={{ color: 'pink.400' }} fontWeight={500}>
+          <Text
+            transition="all .3s ease"
+            color={isSelected ? hoverColor : 'inherit'}
+            _groupHover={{ color: hoverColor }}
+            fontWeight={500}
+          >
             {label}
           </Text>
           <Text fontSize="sm">{subLabel}</Text>
         </Box>
         <Flex
           transition="all .3s ease"
-          transform="translateX(-10px)"
-          opacity={0}
+          transform={isSelected ? 'translateX(0)' : 'translateX(-10px)'}
+          opacity={isSelected ? 1 : 0}
           _groupHover={{ opacity: '100%', transform: 'translateX(0)' }}
           justify="flex-end"
           align="center"
@@ -36,4 +50,4 @@ function DesktopSubNav({ label, onClick, subLabel }: NavItem) {
   )
 }
 
-export default DesktopSubNav
+export default SubNavItem

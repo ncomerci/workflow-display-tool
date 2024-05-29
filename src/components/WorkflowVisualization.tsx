@@ -3,6 +3,7 @@ import ReactFlow, { Background, Controls, Edge, Node } from 'reactflow'
 import 'reactflow/dist/style.css'
 
 import { useToast } from '@chakra-ui/react'
+import classNames from 'classnames'
 
 import Workflows from '../entities/Workflows'
 import styles from '../styles/WorkflowVisualization.module.css'
@@ -88,7 +89,7 @@ function WorkflowVisualization({ workflows, workflowIdx }: Props) {
 
   return (
     <ReactFlow
-      nodes={nodes.map((node) => ({ ...node, className: getNodeClassName(node) }))}
+      nodes={nodes.map((node) => ({ ...node, className: classNames(styles.node, getNodeClassName(node)) }))}
       edges={edges.map((edge) => ({ ...edge, className: getEdgeClassName(edge) }))}
       onNodeClick={(_, node) => handleNodeClick(node)}
     >
