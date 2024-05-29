@@ -10,8 +10,15 @@ export interface Task {
   taskConfig: TaskConfig
 }
 
-export interface Environment {
+export interface WorkflowsEnvironment {
   tasks: Task[]
 }
 
-export type EnvironmentQueryResult = QueryResult<Environment, 'environment'>
+export interface Enviroment {
+  id: string
+  namespace: string
+}
+
+export type WorkflowsQueryResult = QueryResult<WorkflowsEnvironment, 'environment'>
+
+export type EnvironmentsQueryResult = QueryResult<Enviroment[], 'environments'>

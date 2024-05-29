@@ -1,11 +1,11 @@
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
 import { Box, Collapse, Flex, IconButton, useColorModeValue, useDisclosure } from '@chakra-ui/react'
+
 import Logo from '../../assets/logo.png'
+import styles from '../../styles/Navbar.module.css'
 
 import DesktopNav from './DesktopNav'
 import MobileNav from './MobileNav'
-
-import styles from '../../styles/Navbar.module.css'
 
 export interface NavItem {
   label: string
@@ -15,13 +15,18 @@ export interface NavItem {
 }
 
 interface Props {
-  workflowItems: { label: string; onClick: () => void }[]
+  workflowItems: Pick<NavItem, 'label' | 'onClick'>[]
+  enviromentItems: Pick<NavItem, 'label' | 'onClick'>[]
 }
 
-export default function Navbar({ workflowItems }: Props) {
+export default function Navbar({ workflowItems, enviromentItems }: Props) {
   const { isOpen, onToggle } = useDisclosure()
 
   const NAV_ITEMS: Array<NavItem> = [
+    {
+      label: 'Environments',
+      children: enviromentItems,
+    },
     {
       label: 'Workflows',
       children: workflowItems,
