@@ -1,7 +1,8 @@
+import { useMediaQuery } from '@chakra-ui/react'
+
 import { NULL_ADDRESS } from '../entities/Workflows'
 import styles from '../styles/TaskDetails.module.css'
 import { Task } from '../types/Tasks'
-import { useMediaQuery } from '@chakra-ui/react'
 
 interface Props {
   task: Task
