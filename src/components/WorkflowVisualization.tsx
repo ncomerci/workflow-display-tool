@@ -52,7 +52,12 @@ function WorkflowVisualization({ workflows, workflowIdx }: Props) {
       }
 
       const newHighlightedElements: HighlightedElements = { nodes: new Set(), edges: new Set() }
+      const visitedNodes = new Set<string>()
+
       const traverseBackwards = (currentNodeId: string) => {
+        if (visitedNodes.has(currentNodeId)) return
+        visitedNodes.add(currentNodeId)
+
         newHighlightedElements.nodes.add(currentNodeId)
         edges.forEach((edge) => {
           if (edge.target === currentNodeId) {
